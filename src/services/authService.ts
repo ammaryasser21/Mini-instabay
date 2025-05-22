@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode";
-import { API_ENDPOINTS } from '../config/api';
+
+const API_URL = 'http://service1.runasp.net/api/User';
 
 interface LoginResponse {
   token: string;
@@ -27,7 +28,7 @@ formLoginData.append("Email", email);
 formLoginData.append("Password", password);
 
   try {
-    const response = await axios.post(API_ENDPOINTS.user.login, formLoginData);
+    const response = await axios.post(`${API_URL}/Login`, formLoginData);
     console.log(response.data);
     const token = response.data.data.token;
     const decodedToken = jwtDecode<JwtPayload>(token);
@@ -62,7 +63,7 @@ export const registerUser = async (
     formRegisterData.append("Phone_Number", phoneNumber);
 
 console.log(formRegisterData);
-    const response = await axios.post(API_ENDPOINTS.user.register, formRegisterData);
+    const response = await axios.post(`${API_URL}/Register`, formRegisterData);
     const token = response.data.data.token;
     const decodedToken = jwtDecode<JwtPayload>(token);
 
