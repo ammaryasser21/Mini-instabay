@@ -1,7 +1,5 @@
 import axios from 'axios';
-
-const USER_API_URL = 'http://service1.runasp.net/api/User';
-const TRANSACTION_API_URL = 'http://service2.runasp.net/api/Transaction';
+import { API_ENDPOINTS } from '../config/api';
 
 export interface Transaction {
   id: number;
@@ -42,7 +40,7 @@ export interface UpdateBalanceResponse {
 
 const getTransactionsImpl = async (userId: string): Promise<Transaction[]> => {
   try {
-    const response = await axios.get<TransactionResponse>(`${TRANSACTION_API_URL}/${userId}`);
+    const response = await axios.get<TransactionResponse>(API_ENDPOINTS.transaction.getAll(userId));
     console.log("getTransactionsImpl");
     console.log(response.data);
     return response.data.data;
@@ -54,7 +52,7 @@ const getTransactionsImpl = async (userId: string): Promise<Transaction[]> => {
 
 const getUserInfo = async (userId: string): Promise<UserInfo> => {
   try {
-    const response = await axios.get(`${USER_API_URL}/${userId}`);
+    const response = await axios.get(API_ENDPOINTS.user.getUser(userId));
     console.log(response.data);
     return response.data.data;
   } catch (error) {
@@ -66,7 +64,7 @@ const getUserInfo = async (userId: string): Promise<UserInfo> => {
 
 const getBalanceImpl = async (userId: string): Promise<Balance> => {
   try {
-    const response = await axios.get(`${USER_API_URL}/${userId}`);
+    const response = await axios.get(API_ENDPOINTS.user.getUser(userId));
     console.log(response.data);
     return response.data.data;
   } catch (error) {
@@ -77,7 +75,7 @@ const getBalanceImpl = async (userId: string): Promise<Balance> => {
 
 const updateBalance = async (userId: string, newBalance: number): Promise<UpdateBalanceResponse> => {
   try {
-    const response = await axios.put<UpdateBalanceResponse>(`${USER_API_URL}/${userId}`, {
+    const response = await axios.put<UpdateBalanceResponse>(API_ENDPOINTS.user.updateBalance(userId), {
       amount: newBalance
     });
     console.log("updateBalance");
@@ -101,7 +99,7 @@ const sendMoneyImpl = async (
   formSendMoneyData.append("sender", sender);
   formSendMoneyData.append("receiverPhone", receiverPhone);
   formSendMoneyData.append("amount", String(amount));
-    const response = await axios.post(TRANSACTION_API_URL, formSendMoneyData);
+    const response = await axios.post(API_ENDPOINTS.transaction.create, formSendMoneyData);
     console.log("sendMoneyImpl");
     console.log(response.data);
     return response.data;

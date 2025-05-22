@@ -4,8 +4,7 @@ import axios from 'axios';
 // However, if your project setup supports it like this, it's fine.
 // For max compatibility, I'll use the common default import style.
 import { jwtDecode } from "jwt-decode";
-
-const API_URL = 'http://service3.runasp.net/api';
+import { API_ENDPOINTS } from '../config/api';
 
 // Represents a single transaction entry from the history API
 export interface HistoryEntry {
@@ -75,7 +74,7 @@ const getHistoryImpl = async (userId: string): Promise<HistoryApiResponse> => {
   }
   try {
     // The response from axios.get will be directly of type HistoryApiResponse
-    const response = await axios.get<HistoryApiResponse>(`${API_URL}/Report/${userId}`);
+    const response = await axios.get<HistoryApiResponse>(API_ENDPOINTS.report.history(userId));
     // console.log("getHistoryImpl response:", response.data);
     return response.data; // The whole object { message, data }
   } catch (error) {
@@ -93,7 +92,7 @@ const getSummaryImpl = async (userId: string): Promise<SummaryApiResponse> => {
   }
   try {
     // The response from axios.get will be directly of type SummaryApiResponse
-    const response = await axios.get<SummaryApiResponse>(`${API_URL}/Report/Summary/${userId}`);
+    const response = await axios.get<SummaryApiResponse>(API_ENDPOINTS.report.summary(userId));
     // console.log("getSummaryImpl response:", response.data);
     return response.data; // The whole object { message, data }
   } catch (error) {
