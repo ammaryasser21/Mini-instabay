@@ -5,7 +5,7 @@ import axios from 'axios';
 // For max compatibility, I'll use the common default import style.
 import { jwtDecode } from "jwt-decode";
 
-const API_URL = 'http://service3.runasp.net/api';
+const API_URL = '/api/service3';
 
 // Represents a single transaction entry from the history API
 export interface HistoryEntry {

@@ -1,0 +1,3 @@
+/api/service1/*  http://service1.runasp.net/api/User/:splat  200
+/api/service2/*  http://service2.runasp.net/api/:splat  200
+/api/service3/*  http://service3.runasp.net/api/:splat  200 
